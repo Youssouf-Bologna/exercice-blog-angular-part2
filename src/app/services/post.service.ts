@@ -1,46 +1,36 @@
+import {Post} from '../models/Post.model';
 import {Subject} from 'rxjs/Subject';
 
 export class PostService {
   
-    postsSubject = new Subject<any[]>();
-    
-    private posts = [
-        {
-            id:1,
-            title: 'Mon premier post',
-            content: 'Proprium proprium simulatione utilitates a coniungendam quidem nihil minus propter amicitiae et meritis quisque etiam.',
-            loveIts: 1,
-            created_at: Date()
-        },
-        {
-            id:2,
-            title: 'Mon deuxième post',
-            content: 'Proprium proprium simulatione utilitates a coniungendam quidem nihil minus propter amicitiae et meritis quisque etiam.',
-            loveIts: -1,
-            created_at: Date()
-        },
-        {
-            id:3,
-            title: 'Encore un post',
-            content: 'Proprium proprium simulatione utilitates a coniungendam quidem nihil minus propter amicitiae et meritis quisque etiam.',
-            loveIts: 0,
-            created_at: Date()
-        }
+    private posts: Post[] = [
+        new Post(1,'Mon premier post','Proprium proprium simulatione utilitates a coniungendam quidem nihil minus propter amicitiae et meritis quisque etiam.', 1, new Date()),
+        new Post(2,'Mon deuxième post','Proprium proprium simulatione utilitates a coniungendam quidem nihil minus propter amicitiae et meritis quisque etiam.', -1, new Date()),
+        new Post(3,'Encore un post','Proprium proprium simulatione utilitates a coniungendam quidem nihil minus propter amicitiae et meritis quisque etiam.', 0, new Date())
     ];
+    postSubject = new Subject<Post[]>();
+    private taile = this.posts.length;
   
-  emitAppareilSubject() {
-
-      this.postsSubject.next(this.posts.slice());
-
+  emitPostsSubject() {
+      this.postSubject.next(this.posts.slice())
   }
   
   loveItsUp(i: number) {
       this.posts[i].loveIts ++;
-      this.emitAppareilSubject();
+      this.emitPostsSubject();
   }
   
   loveItsDown(i: number) {
       this.posts[i].loveIts --;
-      this.emitAppareilSubject();
+      this.emitPostsSubject();
+  }
+  
+  addpost(post: Post) {
+    this.posts.push(post);
+    this.emitPostsSubject();
+  }
+  
+  getPostLength() {
+      return this.taile;
   }
 }
