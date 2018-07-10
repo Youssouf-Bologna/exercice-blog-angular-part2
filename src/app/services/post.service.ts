@@ -30,6 +30,11 @@ export class PostService {
     this.emitPostsSubject();
   }
   
+  removePost(i: number) {
+      this.posts.splice(i, 1);
+    this.emitPostsSubject();
+  }
+  
   getPostLength() {
       return this.taile;
   }

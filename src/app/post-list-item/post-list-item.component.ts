@@ -22,5 +22,9 @@ export class PostListItemComponent implements OnInit {
   
   onDontLoveIts(index: number){
       this.postService.loveItsDown(index);
+  }
+  
+    onRemove(index: number){
+      this.postService.removePost(index);
   }  
 }
